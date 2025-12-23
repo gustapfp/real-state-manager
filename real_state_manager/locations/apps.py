@@ -10,4 +10,4 @@ class LocationsConfig(AppConfig):
 
     def ready(self):
         with contextlib.suppress(ImportError):
-            import real_state_manager.users.signals  # noqa: F401, PLC0415
+            import real_state_manager.locations.signals  # noqa: F401, PLC0415  # pyright: ignore[reportMissingImports]

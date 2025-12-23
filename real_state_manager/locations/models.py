@@ -10,7 +10,7 @@ class Location(models.Model):
     neighborhood = models.CharField(max_length=100)
     street = models.CharField(max_length=100)
     number = models.CharField(max_length=10)
-    complement = models.CharField(max_length=100, blank=True)
+    complement = models.CharField(max_length=100, null=True, blank=True)  # noqa: DJ001
     country = models.CharField(max_length=100, default="Brazil")
     location = LocationField(
         "Pos",

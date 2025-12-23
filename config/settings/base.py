@@ -90,6 +90,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "real_state_manager.users",
     "real_state_manager.locations",
+    "real_state_manager.guests",
+    "real_state_manager.real_estate",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

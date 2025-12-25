@@ -116,20 +116,23 @@ class ReservationView(APIView):
             logger.exception("Unable to create reservation", error=e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def patch(self, request, reservation_id: str):
+    def patch(self, request):
         """Update a reservation
 
         Args:
             request (_type): Request object
-            reservation_id (str): Reservation ID
 
         Returns:
             _type_: Response object
         """
         try:
-            reservation = Reservation.objects.get(id=reservation_id)
+            reservation = Reservation.objects.get(id=request.data["property"])
             serializer = ReservationUpdateSerializer(reservation, data=request.data)
-            if serializer.is_valid():
+            if serializer.is_valid() and helper.is_available_to_rent(
+                request.data["property"],
+                request.data["check_in"],
+                request.data["check_out"],
+            ):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             logger.error(
@@ -137,6 +140,12 @@ class ReservationView(APIView):
                 errors=serializer.errors,
             )
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Reservation.DoesNotExist:
+            logger.exception(
+                "Reservation not found",
+                reservation_id=request.data["property"],
+            )
+            return Response(status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             logger.exception("Unable to update reservation", error=e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -9,7 +9,10 @@ logger = get_logger()
 
 class RealEstateHelper:
     def is_available_to_rent(
-        self, property_id: str, check_in: date, check_out: date
+        self,
+        property_id: str,
+        check_in: date,
+        check_out: date,
     ) -> bool:
         """Check if a property is available to rent between two dates
 
@@ -19,7 +22,8 @@ class RealEstateHelper:
             check_out (date): Desired check-out date
 
         Returns:
-            bool: True if the property is available to rent between the two dates, False otherwise
+            bool: True if the property is available
+            to rent between the two dates, False otherwise
         """
         try:
             reservations = Reservation.objects.filter(
@@ -30,7 +34,8 @@ class RealEstateHelper:
             return len(reservations) == 0
         except Exception as e:
             logger.exception(
-                "Unable to check if property is available to rent", error=e
+                "Unable to check if property is available to rent",
+                error=e,
             )
             return False
 

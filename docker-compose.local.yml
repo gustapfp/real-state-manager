@@ -38,7 +38,7 @@ services:
        - '5432:5432'
 
   redis:
-    image: docker.io/redis:7.2
+    image: docker.io/redis:8.4
     container_name: real_state_manager_local_redis
     volumes:
       - real_state_manager_local_redis_data:/data
